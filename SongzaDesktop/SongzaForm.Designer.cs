@@ -1,6 +1,6 @@
 ﻿namespace SongzaDesktop
 {
-    partial class _form
+    partial class SongzaForm
     {
         /// <summary>
         /// Required designer variable.
@@ -39,13 +39,16 @@
             this._progress = new System.Windows.Forms.ProgressBar();
             this._currentTime = new System.Windows.Forms.Label();
             this._duration = new System.Windows.Forms.Label();
+            this._playPause = new System.Windows.Forms.Button();
+            this._stop = new System.Windows.Forms.Button();
+            this._login = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this._albumArt)).BeginInit();
             this.SuspendLayout();
             // 
             // _mainList
             // 
             this._mainList.FormattingEnabled = true;
-            this._mainList.Location = new System.Drawing.Point(307, 102);
+            this._mainList.Location = new System.Drawing.Point(309, 93);
             this._mainList.Name = "_mainList";
             this._mainList.Size = new System.Drawing.Size(225, 277);
             this._mainList.TabIndex = 0;
@@ -53,7 +56,7 @@
             // 
             // _back
             // 
-            this._back.Location = new System.Drawing.Point(117, 356);
+            this._back.Location = new System.Drawing.Point(183, 356);
             this._back.Name = "_back";
             this._back.Size = new System.Drawing.Size(75, 23);
             this._back.TabIndex = 1;
@@ -72,7 +75,7 @@
             // 
             // _next
             // 
-            this._next.Location = new System.Drawing.Point(663, 356);
+            this._next.Location = new System.Drawing.Point(654, 356);
             this._next.Name = "_next";
             this._next.Size = new System.Drawing.Size(75, 23);
             this._next.TabIndex = 4;
@@ -108,7 +111,7 @@
             // 
             // _albumArt
             // 
-            this._albumArt.Location = new System.Drawing.Point(56, 117);
+            this._albumArt.Location = new System.Drawing.Point(58, 106);
             this._albumArt.Name = "_albumArt";
             this._albumArt.Size = new System.Drawing.Size(200, 200);
             this._albumArt.TabIndex = 8;
@@ -139,11 +142,45 @@
             this._duration.TabIndex = 11;
             this._duration.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // _form
+            // _playPause
+            // 
+            this._playPause.Enabled = false;
+            this._playPause.Location = new System.Drawing.Point(573, 356);
+            this._playPause.Name = "_playPause";
+            this._playPause.Size = new System.Drawing.Size(75, 23);
+            this._playPause.TabIndex = 12;
+            this._playPause.Text = "Play";
+            this._playPause.UseVisualStyleBackColor = true;
+            this._playPause.Click += new System.EventHandler(this._playPause_Click);
+            // 
+            // _stop
+            // 
+            this._stop.Location = new System.Drawing.Point(736, 355);
+            this._stop.Name = "_stop";
+            this._stop.Size = new System.Drawing.Size(75, 23);
+            this._stop.TabIndex = 13;
+            this._stop.Text = "Stop";
+            this._stop.UseVisualStyleBackColor = true;
+            this._stop.Click += new System.EventHandler(this._stop_Click);
+            // 
+            // _login
+            // 
+            this._login.Location = new System.Drawing.Point(58, 356);
+            this._login.Name = "_login";
+            this._login.Size = new System.Drawing.Size(75, 23);
+            this._login.TabIndex = 14;
+            this._login.Text = "Login...";
+            this._login.UseVisualStyleBackColor = true;
+            this._login.Click += new System.EventHandler(this._login_Click);
+            // 
+            // SongzaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(852, 391);
+            this.Controls.Add(this._login);
+            this.Controls.Add(this._stop);
+            this.Controls.Add(this._playPause);
             this.Controls.Add(this._duration);
             this.Controls.Add(this._currentTime);
             this.Controls.Add(this._progress);
@@ -155,7 +192,7 @@
             this.Controls.Add(this._trackTitle);
             this.Controls.Add(this._back);
             this.Controls.Add(this._mainList);
-            this.Name = "_form";
+            this.Name = "SongzaForm";
             this.Text = "Songza";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this._form_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -178,6 +215,9 @@
         private System.Windows.Forms.ProgressBar _progress;
         private System.Windows.Forms.Label _currentTime;
         private System.Windows.Forms.Label _duration;
+        private System.Windows.Forms.Button _playPause;
+        private System.Windows.Forms.Button _stop;
+        private System.Windows.Forms.Button _login;
     }
 }
 

@@ -69,5 +69,12 @@ namespace SongzaDesktop
             Type = SongzaMenuItemType.Subcategory;
             Tag = s;
         }
+
+        public SongzaMenuItem(Track.Artist a)
+        {
+            Name = a.Name;
+            Type = SongzaMenuItemType.Artist;
+            Tag = a;
+        }
     }
 }

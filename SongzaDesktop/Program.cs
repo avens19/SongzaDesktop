@@ -16,7 +16,7 @@ namespace SongzaDesktop
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new _form());
+            Application.Run(new SongzaForm());
         }
     }
 }
