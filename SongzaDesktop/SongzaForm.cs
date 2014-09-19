@@ -27,6 +27,8 @@ namespace SongzaDesktop
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Icon = System.Drawing.Icon.ExtractAssociatedIcon("songza.ico");
+
             Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero);
 
             _mainList.Items.Add(new SongzaMenuItem("Concierge"));
