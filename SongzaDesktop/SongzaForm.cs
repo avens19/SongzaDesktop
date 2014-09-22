@@ -31,6 +31,14 @@ namespace SongzaDesktop
 
             Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero);
 
+            MainMenu();
+        }
+
+        private void MainMenu()
+        {
+            _menuStack.Clear();
+            _mainList.Items.Clear();
+
             _mainList.Items.Add(new SongzaMenuItem("Concierge"));
             _mainList.Items.Add(new SongzaMenuItem("Browse"));
 
@@ -141,8 +149,12 @@ namespace SongzaDesktop
                 return;
             }
 
-            _menuStack.Push(new List<SongzaMenuItem>(_mainList.Items.Cast<SongzaMenuItem>()));
             MenuClick((SongzaMenuItem) _mainList.SelectedItem);
+        }
+
+        private void PushMenuToStack()
+        {
+            _menuStack.Push(new List<SongzaMenuItem>(_mainList.Items.Cast<SongzaMenuItem>()));
         }
 
         private async void MenuClick(SongzaMenuItem item)
@@ -150,6 +162,7 @@ namespace SongzaDesktop
             switch (item.Type)
             {
                 case SongzaMenuItemType.Menu:
+                    PushMenuToStack();
                     switch (item.Name)
                     {
                         case "Concierge":
@@ -190,11 +203,13 @@ namespace SongzaDesktop
                     }
                     break;
                 case SongzaMenuItemType.Category:
+                    PushMenuToStack();
                     var category = (Category) item.Tag;
                     var subcategories = await API.SubCategories(category.Id);
                     ListSubcategories(subcategories);
                     break;
                 case SongzaMenuItemType.Scenario:
+                    PushMenuToStack();
                     var scenario = (Scenario) item.Tag;
                     if (scenario.Situations != null)
                     {
@@ -206,10 +221,12 @@ namespace SongzaDesktop
                     }
                     break;
                 case SongzaMenuItemType.Situation:
+                    PushMenuToStack();
                     var situation = (Situation) item.Tag;
                     ListStations(await API.ListStations(situation.StationIds.ConvertAll(s => s.ToString()).ToArray()));
                     break;
                 case SongzaMenuItemType.Subcategory:
+                    PushMenuToStack();
                     var subcategory = (SubCategory) item.Tag;
                     ListStations(await API.ListStations(subcategory.StationIds.ConvertAll(s => s.ToString()).ToArray()));
                     break;
@@ -217,6 +234,7 @@ namespace SongzaDesktop
                     PlayStation((Station) item.Tag);
                     break;
                 case SongzaMenuItemType.Artist:
+                    PushMenuToStack();
                     var artist = (Track.Artist) item.Tag;
                     ListStations(await API.StationsForArtist(artist.Id));
                     break;
@@ -363,6 +381,10 @@ namespace SongzaDesktop
         {
             var lf = new LoginForm();
             lf.ShowDialog();
+            if (lf.DialogResult == DialogResult.OK)
+            {
+                MainMenu();
+            }
         }
     }
 }
