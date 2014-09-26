@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Windows.Forms;
 using SongzaClasses;
 using SongzaDesktop.Properties;
 using Un4seen.Bass;
+using Settings = SongzaClasses.Settings;
 
 namespace SongzaDesktop
 {
@@ -27,7 +31,7 @@ namespace SongzaDesktop
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Icon = System.Drawing.Icon.ExtractAssociatedIcon("songza.ico");
+            Icon = Icon.ExtractAssociatedIcon("songza.ico");
 
             Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero);
 
@@ -182,7 +186,8 @@ namespace SongzaDesktop
                         case "Favorites":
                             var favorites = await API.Favorites();
                             var favorite = favorites.Single(f => f.Title == "Favorites");
-                            ListStations(await API.ListStations(favorite.StationIds.ConvertAll(s => s.ToString()).ToArray()));
+                            ListStations(
+                                await API.ListStations(favorite.StationIds.ConvertAll(s => s.ToString()).ToArray()));
                             break;
                         case "Search Artists":
                             var sf = new SearchForm {Type = SearchType.Artist};
@@ -337,12 +342,13 @@ namespace SongzaDesktop
 
         private void _form_FormClosing(object sender, FormClosingEventArgs e)
         {
+            Stop();
+
             if (_monitorThread != null)
             {
                 _monitorThread.Abort();
                 _monitorThread = null;
             }
-            Bass.BASS_StreamFree(_stream);
         }
 
         private void PlayPause()
@@ -350,13 +356,13 @@ namespace SongzaDesktop
             if (_playPause.Text == Resources._form_UpdateUi_Pause)
             {
                 _playPause.Text = Resources.SongzaForm__playPause_Click_Play;
-                Bass.BASS_Pause();
+                Bass.BASS_ChannelPause(_stream);
                 _trackPlaying = false;
             }
             else
             {
                 _playPause.Text = Resources._form_UpdateUi_Pause;
-                Bass.BASS_Start();
+                Bass.BASS_ChannelPlay(_stream, false);
                 _trackPlaying = true;
             }
         }
@@ -368,7 +374,9 @@ namespace SongzaDesktop
 
         private void Stop()
         {
-            Bass.BASS_Stop();
+            Bass.BASS_ChannelStop(_stream);
+            Bass.BASS_StreamFree(_stream);
+            _stream = 0;
             ClearUi();
         }
 
@@ -384,6 +392,40 @@ namespace SongzaDesktop
             if (lf.DialogResult == DialogResult.OK)
             {
                 MainMenu();
+            }
+        }
+
+        private void _download_Click(object sender, EventArgs e)
+        {
+            DownloadSong();
+        }
+
+        private void DownloadSong()
+        {
+            Track song = API.GetCurrentTrack();
+
+            if (song == null)
+            {
+                return;
+            }
+
+            _downloadSongDialog.FileName = string.Format("{0} - {1}", song.Song.Artist.Name, song.Song.Title);
+            _downloadSongDialog.InitialDirectory = Settings.InitialDirectory ??
+                                                   Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+            _downloadSongDialog.DefaultExt = "m4a";
+            _downloadSongDialog.Filter = "M4A Audio File (*.m4a)|*.m4a";
+
+            var result = _downloadSongDialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                Settings.InitialDirectory = Path.GetDirectoryName(_downloadSongDialog.FileName);
+                Settings.Save();
+
+                using (var wc = new WebClient())
+                {
+                    wc.DownloadFileAsync(new Uri(song.ListenUrl), _downloadSongDialog.FileName);
+                }
             }
         }
     }

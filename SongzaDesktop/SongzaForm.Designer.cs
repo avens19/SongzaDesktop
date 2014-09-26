@@ -42,21 +42,23 @@
             this._playPause = new System.Windows.Forms.Button();
             this._stop = new System.Windows.Forms.Button();
             this._login = new System.Windows.Forms.Button();
+            this._download = new System.Windows.Forms.Button();
+            this._downloadSongDialog = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this._albumArt)).BeginInit();
             this.SuspendLayout();
             // 
             // _mainList
             // 
             this._mainList.FormattingEnabled = true;
-            this._mainList.Location = new System.Drawing.Point(309, 93);
+            this._mainList.Location = new System.Drawing.Point(96, 106);
             this._mainList.Name = "_mainList";
-            this._mainList.Size = new System.Drawing.Size(225, 277);
+            this._mainList.Size = new System.Drawing.Size(225, 264);
             this._mainList.TabIndex = 0;
             this._mainList.SelectedIndexChanged += new System.EventHandler(this._mainList_SelectedIndexChanged);
             // 
             // _back
             // 
-            this._back.Location = new System.Drawing.Point(183, 356);
+            this._back.Location = new System.Drawing.Point(15, 168);
             this._back.Name = "_back";
             this._back.Size = new System.Drawing.Size(75, 23);
             this._back.TabIndex = 1;
@@ -67,7 +69,7 @@
             // _trackTitle
             // 
             this._trackTitle.AutoSize = true;
-            this._trackTitle.Location = new System.Drawing.Point(582, 117);
+            this._trackTitle.Location = new System.Drawing.Point(327, 108);
             this._trackTitle.Name = "_trackTitle";
             this._trackTitle.Size = new System.Drawing.Size(0, 13);
             this._trackTitle.TabIndex = 3;
@@ -75,7 +77,7 @@
             // 
             // _next
             // 
-            this._next.Location = new System.Drawing.Point(654, 356);
+            this._next.Location = new System.Drawing.Point(441, 356);
             this._next.Name = "_next";
             this._next.Size = new System.Drawing.Size(75, 23);
             this._next.TabIndex = 4;
@@ -86,7 +88,7 @@
             // _artist
             // 
             this._artist.AutoSize = true;
-            this._artist.Location = new System.Drawing.Point(582, 151);
+            this._artist.Location = new System.Drawing.Point(327, 121);
             this._artist.Name = "_artist";
             this._artist.Size = new System.Drawing.Size(0, 13);
             this._artist.TabIndex = 5;
@@ -95,7 +97,7 @@
             // _album
             // 
             this._album.AutoSize = true;
-            this._album.Location = new System.Drawing.Point(582, 182);
+            this._album.Location = new System.Drawing.Point(327, 134);
             this._album.Name = "_album";
             this._album.Size = new System.Drawing.Size(0, 13);
             this._album.TabIndex = 6;
@@ -103,15 +105,15 @@
             // 
             // _station
             // 
-            this._station.Location = new System.Drawing.Point(12, 9);
+            this._station.Location = new System.Drawing.Point(15, 9);
             this._station.Name = "_station";
-            this._station.Size = new System.Drawing.Size(828, 25);
+            this._station.Size = new System.Drawing.Size(612, 25);
             this._station.TabIndex = 7;
             this._station.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // _albumArt
             // 
-            this._albumArt.Location = new System.Drawing.Point(58, 106);
+            this._albumArt.Location = new System.Drawing.Point(330, 150);
             this._albumArt.Name = "_albumArt";
             this._albumArt.Size = new System.Drawing.Size(200, 200);
             this._albumArt.TabIndex = 8;
@@ -119,16 +121,16 @@
             // 
             // _progress
             // 
-            this._progress.Location = new System.Drawing.Point(12, 50);
+            this._progress.Location = new System.Drawing.Point(15, 50);
             this._progress.MarqueeAnimationSpeed = 0;
             this._progress.Maximum = 100000;
             this._progress.Name = "_progress";
-            this._progress.Size = new System.Drawing.Size(828, 23);
+            this._progress.Size = new System.Drawing.Size(612, 23);
             this._progress.TabIndex = 9;
             // 
             // _currentTime
             // 
-            this._currentTime.Location = new System.Drawing.Point(9, 80);
+            this._currentTime.Location = new System.Drawing.Point(12, 80);
             this._currentTime.Name = "_currentTime";
             this._currentTime.Size = new System.Drawing.Size(100, 23);
             this._currentTime.TabIndex = 10;
@@ -136,7 +138,7 @@
             // _duration
             // 
             this._duration.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this._duration.Location = new System.Drawing.Point(740, 80);
+            this._duration.Location = new System.Drawing.Point(298, 80);
             this._duration.Name = "_duration";
             this._duration.Size = new System.Drawing.Size(100, 23);
             this._duration.TabIndex = 11;
@@ -145,7 +147,7 @@
             // _playPause
             // 
             this._playPause.Enabled = false;
-            this._playPause.Location = new System.Drawing.Point(573, 356);
+            this._playPause.Location = new System.Drawing.Point(360, 356);
             this._playPause.Name = "_playPause";
             this._playPause.Size = new System.Drawing.Size(75, 23);
             this._playPause.TabIndex = 12;
@@ -155,7 +157,7 @@
             // 
             // _stop
             // 
-            this._stop.Location = new System.Drawing.Point(736, 355);
+            this._stop.Location = new System.Drawing.Point(523, 355);
             this._stop.Name = "_stop";
             this._stop.Size = new System.Drawing.Size(75, 23);
             this._stop.TabIndex = 13;
@@ -165,7 +167,7 @@
             // 
             // _login
             // 
-            this._login.Location = new System.Drawing.Point(58, 356);
+            this._login.Location = new System.Drawing.Point(15, 139);
             this._login.Name = "_login";
             this._login.Size = new System.Drawing.Size(75, 23);
             this._login.TabIndex = 14;
@@ -173,11 +175,22 @@
             this._login.UseVisualStyleBackColor = true;
             this._login.Click += new System.EventHandler(this._login_Click);
             // 
+            // _download
+            // 
+            this._download.Location = new System.Drawing.Point(15, 110);
+            this._download.Name = "_download";
+            this._download.Size = new System.Drawing.Size(75, 23);
+            this._download.TabIndex = 15;
+            this._download.Text = "Download...";
+            this._download.UseVisualStyleBackColor = true;
+            this._download.Click += new System.EventHandler(this._download_Click);
+            // 
             // SongzaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(852, 391);
+            this.ClientSize = new System.Drawing.Size(644, 391);
+            this.Controls.Add(this._download);
             this.Controls.Add(this._login);
             this.Controls.Add(this._stop);
             this.Controls.Add(this._playPause);
@@ -218,6 +231,8 @@
         private System.Windows.Forms.Button _playPause;
         private System.Windows.Forms.Button _stop;
         private System.Windows.Forms.Button _login;
+        private System.Windows.Forms.Button _download;
+        private System.Windows.Forms.SaveFileDialog _downloadSongDialog;
     }
 }
 

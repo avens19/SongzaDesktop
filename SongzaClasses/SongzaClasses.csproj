@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="API.cs" />
     <Compile Include="Category.cs" />
+    <Compile Include="Equalizer.cs" />
     <Compile Include="Favorite.cs" />
     <Compile Include="PivotWrapper.cs" />
     <Compile Include="Popular.cs" />

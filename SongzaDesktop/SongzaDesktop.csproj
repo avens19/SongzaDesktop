@@ -112,6 +112,9 @@
     <Content Include="bass.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="ffmbc.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="songza.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

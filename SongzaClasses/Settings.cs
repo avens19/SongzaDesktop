@@ -18,6 +18,7 @@ namespace SongzaClasses
         public static string Password { get; set; }
         public static string SessionId { get; set; }
         public static DateTime Created { get; set; }
+        public static string InitialDirectory { get; set; }
 
         static Settings()
         {
@@ -46,14 +47,14 @@ namespace SongzaClasses
             {
                 using (var sw = new StreamReader(new FileStream(filePath, FileMode.Open)))
                 {
-                    var settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(sw.ReadToEnd());
+                    var settings = JsonConvert.DeserializeObject<Dictionary<string, string>>(sw.ReadToEnd());
                     var vals = typeof(Settings).GetProperties();
 
                     foreach (var val in vals)
                     {
                         if (settings.ContainsKey(val.Name))
                         {
-                            val.SetValue(null, Convert.ChangeType(settings[val.Name], val.PropertyType));
+                            val.SetValue(null, JsonConvert.DeserializeObject(settings[val.Name], val.PropertyType));
                         }
                     }
                 }
@@ -76,7 +77,7 @@ namespace SongzaClasses
 
                 foreach (var val in vals)
                 {
-                    settings[val.Name] = val.GetValue(null);
+                    settings[val.Name] = JsonConvert.SerializeObject(val.GetValue(null));
                 }
 
                 sw.WriteLine(JsonConvert.SerializeObject(settings));
